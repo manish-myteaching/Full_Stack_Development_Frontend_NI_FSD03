@@ -1,0 +1,75 @@
+++++++++++++++++++++
+Angular Mini Project
+++++++++++++++++++++
+
+ng new ecommerce-dashboard
+cd ecommerce-dashboard
+
+ng generate module auth
+ng generate module cart
+ng generate module orders
+ng generate module products
+ng generate module payment
+
+ng generate component auth/login --module auth
+ng generate component auth/register --module auth
+
+ng generate component cart/cart --module cart
+
+ng generate component orders/order-list --module orders
+ng generate component orders/order-details --module orders
+
+ng generate component products/product-list --module products
+ng generate component products/product-details --module products
+
+ng generate component payment/payment --module payment
+
+ng generate pipe shared/priceFormat
+ng generate directive shared/highlight
+
+ng generate service services/product
+ng generate service services/cart
+ng generate service services/order
+
+	 
+	 
+	 // src/app/auth/auth.service.ts
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private currentUserSubject = new BehaviorSubject<string | null>(null);
+  public currentUser$: Observable<string | null> = this.currentUserSubject.asObservable();
+
+  constructor() {
+    // Initialize user from localStorage if available
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.currentUserSubject.next(storedUser);
+    }
+  }
+
+  login(username: string, password: string): boolean {
+    // Dummy login logic
+    if (username === 'user' && password === 'password') {
+      this.currentUserSubject.next(username);
+      localStorage.setItem('currentUser', username);
+      return true;
+    }
+    return false;
+  }
+
+  register(username: string, password: string): void {
+    // Dummy registration logic
+    console.log(`Registered user: ${username}`);
+  }
+
+  logout(): void {
+    this.currentUserSubject.next(null);
+    localStorage.removeItem('currentUser');
+  }
+}
+
