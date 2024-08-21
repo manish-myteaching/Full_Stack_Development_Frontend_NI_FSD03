@@ -1,0 +1,7 @@
+<!-- src/app/product/product-details/product-details.component.html -->
+<div *ngIf="product">
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price | priceFormat }}</p>
+  </div>
+  
